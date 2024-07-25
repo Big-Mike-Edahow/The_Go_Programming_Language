@@ -1,11 +1,7 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// Run with "web" command-line argument for web server.
-// See page 13.
-//!+main
+// main.go
 
 // Lissajous generates GIF animations of random Lissajous figures.
+
 package main
 
 import (
@@ -13,47 +9,33 @@ import (
 	"image/color"
 	"image/gif"
 	"io"
+	"log"
 	"math"
 	"math/rand"
+	"net/http"
 	"os"
 )
-
-//!-main
-// Packages not needed by version in book.
-import (
-	"log"
-	"net/http"
-	"time"
-)
-
-//!+main
 
 var palette = []color.Color{color.White, color.Black}
 
 const (
-	whiteIndex = 0 // first color in palette
-	blackIndex = 1 // next color in palette
+	whiteIndex = 0 // First color in palette.
+	blackIndex = 1 // Next color in palette.
 )
 
 func main() {
-	//!-main
-	// The sequence of images is deterministic unless we seed
-	// the pseudo-random number generator using the current time.
-	// Thanks to Randall McPherson for pointing out the omission.
-	rand.Seed(time.Now().UTC().UnixNano())
-
 	if len(os.Args) > 1 && os.Args[1] == "web" {
-		//!+http
-		handler := func(w http.ResponseWriter, r *http.Request) {
-			lissajous(w)
-		}
-		http.HandleFunc("/", handler)
-		//!-http
-		log.Fatal(http.ListenAndServe("localhost:8000", nil))
-		return
+		http.HandleFunc("/", indexHandler)
+
+		log.Println("Serving HTTP on port 8080...")
+		log.Fatal(http.ListenAndServe(":8080", logRequest(http.DefaultServeMux)))
+	} else {
+		lissajous(os.Stdout)
 	}
-	//!+main
-	lissajous(os.Stdout)
+}
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	lissajous(w)
 }
 
 func lissajous(out io.Writer) {
@@ -83,4 +65,9 @@ func lissajous(out io.Writer) {
 	gif.EncodeAll(out, &anim) // NOTE: ignoring encoding errors
 }
 
-//!-main
+func logRequest(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
+		handler.ServeHTTP(w, r)
+	})
+}
