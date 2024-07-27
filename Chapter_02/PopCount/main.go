@@ -1,11 +1,12 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// main.go
 
-// See page 45.
+// PopCount returns the population count, the number of set bits (1), of x.
 
-// (Package doc comment intentionally malformed to demonstrate golint.)
-//!+
-package popcount
+package main
+
+import (
+	"fmt"
+)
 
 // pc[i] is the population count of i.
 var pc [256]byte
@@ -16,7 +17,13 @@ func init() {
 	}
 }
 
-// PopCount returns the population count (number of set bits) of x.
+func main () {
+	result := PopCount(42)	// 42 has a Population Count of 3 (101010).
+
+	fmt.Println(result)
+}
+
+// PopCount returns the population count, the number of set bits (1), of x.
 func PopCount(x uint64) int {
 	return int(pc[byte(x>>(0*8))] +
 		pc[byte(x>>(1*8))] +
@@ -27,5 +34,3 @@ func PopCount(x uint64) int {
 		pc[byte(x>>(6*8))] +
 		pc[byte(x>>(7*8))])
 }
-
-//!-

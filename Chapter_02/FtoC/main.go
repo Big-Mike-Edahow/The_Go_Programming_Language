@@ -1,10 +1,7 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 29.
-//!+
+// main.go
 
 // Ftoc prints two Fahrenheit-to-Celsius conversions.
+
 package main
 
 import "fmt"
@@ -18,5 +15,3 @@ func main() {
 func fToC(f float64) float64 {
 	return (f - 32) * 5 / 9
 }
-
-//!-

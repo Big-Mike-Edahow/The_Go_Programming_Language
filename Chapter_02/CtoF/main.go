@@ -1,10 +1,7 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// main.go
 
-// See page 43.
-//!+
+// CtoF converts it's numeric argument to Celsius and Fahrenheit.
 
-// Cf converts its numeric argument to Celsius and Fahrenheit.
 package main
 
 import (
@@ -12,7 +9,7 @@ import (
 	"os"
 	"strconv"
 
-	"gopl.io/ch2/tempconv"
+	"ctof/tempconv"
 )
 
 func main() {
@@ -28,5 +25,3 @@ func main() {
 			f, tempconv.FToC(f), c, tempconv.CToF(c))
 	}
 }
-
-//!-
