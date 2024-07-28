@@ -1,5 +1,7 @@
 // main.go
 
+// TreeSort provides insertion sort using an unbalanced binary tree.
+
 package main
 
 import (
@@ -12,18 +14,18 @@ import (
 )
 
 func main() {
-	data := TestSort(&testing.T{})
-	fmt.Println("Tree Sort of Test Data:\n", data)
+	TestSort(&testing.T{})
 }
 
-func TestSort(t *testing.T)[]int {
+func TestSort(t *testing.T){
 	data := make([]int, 50)
 	for i := range data {
 		data[i] = rand.Int() % 50
 	}
+	fmt.Printf("Unsorted data:\n%v\n", data)
 	treesort.Sort(data)
 	if !sort.IntsAreSorted(data) {
 		t.Errorf("not sorted: %v", data)
 	}
-	return data
+	fmt.Println("\nTree Sort of Test Data:\n", data)
 }
