@@ -1,6 +1,6 @@
-// clock.go
+// main.go
 
-// Clock is a TCP server that periodically writes the time.
+// Clock_02 is a TCP server that periodically writes the time.
 
 package main
 

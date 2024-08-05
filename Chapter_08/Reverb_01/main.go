@@ -1,4 +1,4 @@
-// reverb.go
+// main.go
 
 // Reverb_01 is a TCP server that simulates an echo.
 
